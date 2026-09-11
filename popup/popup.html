@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Speed Controller</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="vsc-popup">
+      <h1>Video Speed</h1>
+
+      <div id="status" class="status">Buscando video…</div>
+
+      <div class="speed-row">
+        <button id="btnMinus" class="step-btn">−0.1</button>
+        <span id="speedValue" class="speed-value">1.0x</span>
+        <button id="btnPlus" class="step-btn">+0.1</button>
+      </div>
+
+      <div class="presets" id="presets"></div>
+
+      <div class="custom-row">
+        <input type="number" id="customSpeed" min="0.1" max="4" step="0.1" placeholder="Custom" />
+        <button id="btnApplyCustom">Aplicar</button>
+      </div>
+
+      <button id="btnReset" class="secondary">Reset a 1x</button>
+      <button id="btnForgetSite" class="secondary danger">Olvidar velocidad de este sitio</button>
+
+      <a id="linkOptions" href="#">Configurar atajos y opciones</a>
+    </div>
+    <script src="../lib/storage.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
