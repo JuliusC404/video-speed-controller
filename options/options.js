@@ -13,11 +13,20 @@ const speedStepEl = document.getElementById("speedStep");
 const minSpeedEl = document.getElementById("minSpeed");
 const maxSpeedEl = document.getElementById("maxSpeed");
 const perSitePersistenceEl = document.getElementById("perSitePersistence");
+const shortcutsEnabledEl = document.getElementById("shortcutsEnabled");
 const siteTableBody = document.getElementById("siteTableBody");
 const siteEmptyMsg = document.getElementById("siteEmptyMsg");
 const saveMsg = document.getElementById("saveMsg");
 
 let currentKeybindings = {};
+
+function updateKeybindGridState() {
+  const enabled = shortcutsEnabledEl.checked;
+  keybindGrid.querySelectorAll("input").forEach((input) => {
+    input.disabled = !enabled;
+  });
+  keybindGrid.style.opacity = enabled ? "1" : "0.4";
+}
 
 function renderKeybindGrid() {
   keybindGrid.innerHTML = "";
@@ -43,6 +52,7 @@ function renderKeybindGrid() {
     keybindGrid.appendChild(labelEl);
     keybindGrid.appendChild(input);
   }
+  updateKeybindGridState();
 }
 
 async function renderSiteTable() {
@@ -83,8 +93,11 @@ async function loadSettings() {
   minSpeedEl.value = settings.minSpeed;
   maxSpeedEl.value = settings.maxSpeed;
   perSitePersistenceEl.checked = settings.perSitePersistence;
+  shortcutsEnabledEl.checked = settings.shortcutsEnabled;
   renderKeybindGrid();
 }
+
+shortcutsEnabledEl.addEventListener("change", updateKeybindGridState);
 
 document.getElementById("btnSave").addEventListener("click", async () => {
   await VSCStorage.saveSettings({
@@ -93,7 +106,8 @@ document.getElementById("btnSave").addEventListener("click", async () => {
     speedStep: parseFloat(speedStepEl.value) || 0.1,
     minSpeed: parseFloat(minSpeedEl.value) || 0.1,
     maxSpeed: parseFloat(maxSpeedEl.value) || 4.0,
-    perSitePersistence: perSitePersistenceEl.checked
+    perSitePersistence: perSitePersistenceEl.checked,
+    shortcutsEnabled: shortcutsEnabledEl.checked
   });
   saveMsg.textContent = "Guardado.";
   setTimeout(() => (saveMsg.textContent = ""), 1500);

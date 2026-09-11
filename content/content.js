@@ -151,7 +151,7 @@
   document.addEventListener(
     "keydown",
     (e) => {
-      if (!settings || isTypingTarget(document.activeElement)) return;
+      if (!settings || !settings.shortcutsEnabled || isTypingTarget(document.activeElement)) return;
       const key = e.key.toLowerCase();
       const kb = settings.keybindings;
       const video = getTargetVideo();
